@@ -1,5 +1,5 @@
 # csn-dx23tt12-tranminhtien-CalculatorPyhthon
-Đây là lộ trình đang thực hiện được của em ạ. Mong thầy xem và cho em hướng dẫn cũng như lời. Có thể góp ý cho em qua gmail: Danggon204@gmail.com hoặc zalo: 0973336457 hoặc trực tiếp trên đây ạ. Em cám ơn thầy rất nhiều.
+Đây là lộ trình đang thực hiện được của em ạ. Mong thầy xem và cho em hướng dẫn cũng như lời khuyên. Có thể góp ý cho em qua gmail: Danggon204@gmail.com hoặc zalo: 0973336457 hoặc trực tiếp trên đây ạ. Em cám ơn thầy rất nhiều.
 Đây là lộ trình tiến độ của em.
 1.Lập đề cương chi tiết.
 2.Tìm hiểu về Python
@@ -8,7 +8,7 @@
 5.Thiết kế các nút, nút hiển thị sẽ nằm ở hàng thứ 0 và sử dụng chế độ entry để thiết kế.
 6.Tìm hiểu về nút đổi giao diện light/ dark
 7.Thiết kế giao diện chuyển đổi giữa sáng và tối màu nền, màu chữ, ô hiển thị....
-8.Tìn hiểu về các nút số
+8.Tìm hiểu về các nút số
 9.Tìm hiểu về nút chuyển đổi chế độ DEG/Rad
 10.Tìm hiểu về lịch sử tính toán
 11.Viết các hàm đã tìm hiểu để sử dụng hàm lambda để gọi hàm khi nhấn nút
