@@ -1,6 +1,6 @@
 # csn-dx23tt12-tranminhtien-CalculatorPyhthon
 Đây là lộ trình đang thực hiện được của em ạ. Mong thầy xem và cho em hướng dẫn cũng như lời khuyên. Có thể góp ý cho em qua gmail: Danggon204@gmail.com hoặc zalo: 0973336457 hoặc trực tiếp trên đây ạ. Em cám ơn thầy rất nhiều.
-Đây là lộ trình tiến độ của em.
+-----Đây là lộ trình tiến độ của em.-----
 1.Lập đề cương chi tiết.
 2.Tìm hiểu về Python
 3.Tìm hiểu về Tkinter
@@ -14,6 +14,6 @@
 11.Viết các hàm đã tìm hiểu để sử dụng hàm lambda để gọi hàm khi nhấn nút
 12.Chạy chương trình và test thử để kiểm tra lỗi và sửa lại code.
 13.Hoàn thiện và công bố chương trình
-Hôm nay tiến độ của em đang ở thứ 7
+-----O0o Hôm nay tiến độ của em đang ở thứ 7 o0O---------
 
 
