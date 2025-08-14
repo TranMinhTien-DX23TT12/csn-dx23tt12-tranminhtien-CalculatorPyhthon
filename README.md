@@ -14,6 +14,6 @@
 11.Viết các hàm đã tìm hiểu để sử dụng hàm lambda để gọi hàm khi nhấn nút
 12.Chạy chương trình và test thử để kiểm tra lỗi và sửa lại code.
 13.Hoàn thiện và công bố chương trình
------O0o Hôm nay tiến độ của em đang ở thứ 7 o0O---------
+-----O0o Hôm nay tiến độ của em đang ở thứ 9 o0O---------
 
 
