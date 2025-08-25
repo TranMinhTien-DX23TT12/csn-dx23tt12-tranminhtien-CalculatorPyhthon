@@ -14,7 +14,7 @@
 11.Viết các hàm đã tìm hiểu để sử dụng hàm lambda để gọi hàm khi nhấn nút
 12.Chạy chương trình và test thử để kiểm tra lỗi và sửa lại code.
 13.Hoàn thiện và công bố chương trình
------O0o Hôm nay tiến độ của em đang ở thứ 9 o0O---------
-Hôm nay em cập nhật thêm hàm tính nghịch đảo 1/x và hàm tính %
+-----O0o Hôm nay tiến độ của em bắt đầu chạy app và kiểm tra lỗi o0O----- 
+
 
 
