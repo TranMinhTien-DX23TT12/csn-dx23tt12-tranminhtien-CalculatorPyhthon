@@ -4,7 +4,7 @@ import re
 from tkinter import PhotoImage
 
 # ===================== Eval Helpers & Environment =====================
-# Angle mode: True = DEG, False = RAD
+# Đặt cờ: True = DEG, False = RAD
 is_deg = True
 
 def _to_angle(x):
@@ -33,7 +33,7 @@ EVAL_ENV = {
     "log": log, "log10": log10, "exp": exp, "sqrt": sqrt, "cbrt": cbrt,
 }
 
-# ===================== App =====================
+# ===================== App & Trạng thái =====================
 window = tk.Tk()
 window.title("Scientific Calculator +")
 window.resizable(False, False)
@@ -44,7 +44,7 @@ text_input = tk.StringVar()
 memory_val = None
 is_light = True  # theme
 
-# --------------------- Theme ---------------------
+# ===================== Theme (Light / Dark) =====================
 def apply_theme():
     bg = "#f6f8fa" if is_light else "#0f172a"
     fg = "#111827" if is_light else "#e5e7eb"
@@ -67,14 +67,14 @@ def toggle_theme():
     themeBtn.config(text="Light" if is_light else "Dark")
     apply_theme()
 
-# --------------------- Display ---------------------
+# ===================== Ô hiển thị (Entry) =====================
 txtDisplay = tk.Entry(
     window, font=('arial', 20, 'bold'), textvariable=text_input,
     bd=12, insertwidth=4, width=26, borderwidth=4, justify='right'
 )
 txtDisplay.grid(row=0, column=0, columnspan=7, padx=6, pady=6, sticky="we")
 
-# --------------------- Helpers ---------------------
+# ===================== Hàm xử lý nhập & tính toán =====================
 def btnClick(token):
     """Append token to expression; convert '^' to '**'."""
     global operator
@@ -121,13 +121,19 @@ def btnEquals(event=None):
         operator = ""
 
 def get_current_number_span(s):
-    """Return (start, end) indices of trailing number in s, or None."""
+    """
+    Tìm đoạn (start, end) của *số đứng cuối* trong chuỗi s.
+    Dùng cho tính năng phần trăm % để chỉ áp dụng đúng con số cuối.
+    """
     m = re.search(r'(\d+(\.\d+)?)\s*$', s)
     if not m: return None
     return (m.start(1), m.end(1))
 
 def apply_percent_inline():
-    """Transform trailing number N to (N/100)."""
+    """
+    Biến số cuối N thành (N/100).
+    Nếu không tìm thấy số cuối, thêm "(/100)" để người dùng tự hoàn thiện.
+    """
     global operator
     span = get_current_number_span(operator)
     if span:
@@ -139,7 +145,12 @@ def apply_percent_inline():
     text_input.set(operator)
 
 def apply_reciprocal():
-    """Wrap last number or parenthesized term as 1/(term)."""
+   """
+    Nghịch đảo 1/x cho *đơn vị logic* cuối cùng:
+    - Nếu chuỗi kết thúc bằng ')': dò ngoặc để lấy cặp ngoặc khớp gần nhất rồi gói vào 1/(...)
+    - Nếu kết thúc bằng số: gói 1/(số đó)
+    - Nếu không xác định được: gói 1/(toàn bộ chuỗi)
+    """
     global operator
     s = operator.rstrip()
     if not s:
@@ -166,9 +177,12 @@ def apply_reciprocal():
             operator = "1/(" + s + ")"
     text_input.set(operator)
 
-# --------------------- Memory ---------------------
+# ===================== Bộ nhớ (M+ / MR / MC) =====================
 def mem_add():
-    """M+: add current display value to memory (or set if None)."""
+    """
+    M+: Lấy giá trị hiện trên màn hình (Entry), cộng dồn vào bộ nhớ.
+    Nếu bộ nhớ đang None → set bằng giá trị đó.
+    """
     global memory_val
     try:
         val = float(text_input.get())
@@ -181,7 +195,10 @@ def mem_add():
         pass
 
 def mem_recall():
-    """MR: insert memory value into expression."""
+    """
+    MR: Chèn giá trị nhớ vào *biểu thức đang nhập* (operator).
+    Dạng số nguyên thì hiển thị không có .0.
+    """
     global operator
     if memory_val is None:
         return
@@ -194,12 +211,12 @@ def mem_recall():
     text_input.set(operator)
 
 def mem_clear():
-    """MC: clear memory."""
+    """MC: Xóa bộ nhớ và cập nhật nhãn."""
     global memory_val
     memory_val = None
     mem_label.config(text="M=—")
 
-# --------------------- History ---------------------
+# ===================== Lịch sử tính toán =====================
 history = []
 
 def add_history(item: str):
@@ -208,7 +225,10 @@ def add_history(item: str):
     history_list.yview_moveto(1.0)
 
 def history_double_click(event):
-    # On double click, paste the result part into expression
+    """
+    Double-click 1 dòng trong lịch sử sẽ lấy *kết quả* (sau dấu '=')
+    và chèn vào operator (hữu ích để dùng kết quả cho phép tính tiếp).
+    """
     sel = history_list.curselection()
     if not sel: return
     item = history_list.get(sel[0])
@@ -219,8 +239,9 @@ def history_double_click(event):
         operator += paste_result
         text_input.set(operator)
 
-# --------------------- Button Factory ---------------------
-all_buttons = []
+# ===================== Button Factory & Layout =====================
+all_buttons = []  # để apply_theme có thể duyệt và đổi màu toàn bộ nút
+
 
 def make_btn(text, r, c, cmd=None, colspan=1, rowspan=1):
     b = tk.Button(
@@ -232,7 +253,7 @@ def make_btn(text, r, c, cmd=None, colspan=1, rowspan=1):
     all_buttons.append(b)
     return b
 
-# --------------------- Layout ---------------------
+# --------------------- Bố cục phím ---------------------
 # Row 1: sin, cos, tan, log, DEG/RAD, pow, light/dark theme
 make_btn("sin(", 1, 0)
 make_btn("cos(", 1, 1)
@@ -286,26 +307,23 @@ make_btn("=",  6, 3, cmd=btnEquals, colspan=2)
 make_btn("M+", 6, 5, cmd=mem_add)
 make_btn("pi", 6, 6)
 
-
-
-
-
-
-# History label and list
+# --------------------- Lịch sử & Nhãn bộ nhớ ---------------------
 hist_label = tk.Label(window, text="History (double-click to paste result):", font=('arial', 11))
 hist_label.grid(row=7, column=0, columnspan=7, sticky='w', padx=8, pady=(8,0))
 history_list = tk.Listbox(window, height=6)
 history_list.grid(row=8, column=0, columnspan=7, padx=6, pady=(0,8), sticky="we")
 history_list.bind("<Double-Button-1>", history_double_click)
 
-# Memory indicator
 mem_label = tk.Label(window, text="M=—", font=('arial', 11))
 mem_label.grid(row=9, column=0, columnspan=7, sticky='w', padx=8, pady=(0,8))
 
-# Keyboard: Enter to evaluate
+# --------------------- Phím tắt & khởi chạy ---------------------
+# Enter = tính toán
 window.bind("<Return>", btnEquals)
 
-# Apply initial theme
+# Áp theme mặc định
 apply_theme()
 
+# Bắt đầu vòng lặp sự kiện GUI
 window.mainloop()
+
